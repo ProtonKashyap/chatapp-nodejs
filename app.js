@@ -9,6 +9,7 @@ const app = express();
 
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 const notFoundMiddleware = require("./middlewares/not-found");
+const authenticationMiddleware = require("./middlewares/authentication");
 
 //get routes
 const auth = require("./routes/auth");
@@ -17,7 +18,7 @@ const chatRouter = require("./routes/chat");
 //middlewares
 app.use(express.json());
 app.use("/api/v1/auth", auth);
-app.use("/api/v1/chat", chatRouter);
+app.use("/api/v1/chat", authenticationMiddleware, chatRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
