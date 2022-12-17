@@ -1,0 +1,162 @@
+openapi: 3.0.0
+info:
+  title: Chat-Nodejs
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://chat-nodejs.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginRequest'
+                - example:
+                    name: Mohit
+                    password: Kumar123
+            example:
+              name: Mohit
+              password: Kumar123
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/RegisterRequest'
+                - example:
+                    name: Mohit
+                    password: Kumar123
+            example:
+              name: Mohit
+              password: Kumar123
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /chat/{roomId}:
+    parameters:
+      - in: path
+        name: roomId
+        schema:
+          type: string
+        required: true
+        description: The room ID
+    get:
+      tags:
+        - Chat
+      summary: GetAllMessages
+      operationId: GetAllMessages
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  
+    post:
+      tags:
+        - Chat
+      summary: Send Message
+      operationId: SendMessage
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SendMessageRequest'
+                - example:
+                    msg: Hi Neutron sir
+            example:
+              msg: Hi Neutron sir
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - name
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+      example:
+        name: Mohit
+        password: Kumar123
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - name
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+      example:
+        name: Mohit
+        password: Kumar123
+    SendMessageRequest:
+      title: SendMessageRequest
+      required:
+        - msg
+      type: object
+      properties:
+        msg:
+          type: string
+      example:
+        msg: Hi Neutron sir
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Misc
+    description: ''
+  - name: Auth
+    description: ''
+  - name: Chat
+    description: ''
