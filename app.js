@@ -7,6 +7,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 
+//extra packages
+const cors = require("cors");
+
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 const notFoundMiddleware = require("./middlewares/not-found");
 const authenticationMiddleware = require("./middlewares/authentication");
@@ -17,6 +20,7 @@ const chatRouter = require("./routes/chat");
 
 //middlewares
 app.use(express.json());
+app.use(cors());
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/chat", authenticationMiddleware, chatRouter);
 app.use(notFoundMiddleware);
