@@ -5,9 +5,9 @@ const { BadRequestError } = require("../errors");
 
 const getAllMessages = async (req, res) => {
   let roomId = parseInt(req.params.roomId);
-  const room = await Room.findOne({ id: roomId });
+  var room = await Room.findOne({ id: roomId });
   if (!room) {
-    await Room.create({ id: roomId });
+    room=await Room.create({ id: roomId });
   }
   const messages = await Message.find({ sentIn: room._id }).sort("createdAt");
   return res.status(StatusCodes.OK).json({ messages, count: messages.length });
