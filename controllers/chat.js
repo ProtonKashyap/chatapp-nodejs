@@ -6,12 +6,11 @@ const { BadRequestError } = require("../errors");
 const getAllMessages = async (req, res) => {
   let roomId = parseInt(req.params.roomId);
   const room = await Room.findOne({ id: roomId });
-  if (room) {
-    const messages = await Message.find({ sentIn: room._id }).sort("createdAt");
-    return res
-      .status(StatusCodes.OK)
-      .json({ messages, count: messages.length });
-  } else throw new BadRequestError("Room doesn't exist");
+  if (!room) {
+    await Room.create({ id: roomId });
+  }
+  const messages = await Message.find({ sentIn: room._id }).sort("createdAt");
+  return res.status(StatusCodes.OK).json({ messages, count: messages.length });
 };
 const sendMessage = async (req, res) => {
   const room = await Room.findOne({ id: parseInt(req.params.roomId) });
