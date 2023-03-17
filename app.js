@@ -45,7 +45,7 @@ const start = async () => {
     mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Successfully connected to database");
-    app.listen(PORT, async () => {
+    app.listen(PORT, () => {
       console.log(`Server is listening on PORT ${PORT}`);
     });
   } catch (error) {
